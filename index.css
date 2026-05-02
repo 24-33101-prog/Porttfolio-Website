@@ -42,7 +42,13 @@ body {
   font-weight: 1000;
   display: flex;
   align-items: center;
-  gap : 4px;
+  gap: 8px;
+}
+
+.nav-logo img.nav-logo-image {
+  width: 40px;
+  height: auto;
+  object-fit: contain;
 }
 
 .nav-logo .bat {
@@ -71,6 +77,7 @@ body {
   font-size: 14px;
   border-radius: 30px;
   display: inline-block;
+  transition: all .5s ease;
   
 }
 
@@ -85,7 +92,7 @@ body {
   border: none;
   display: inline-block;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 100);
-  transition: all 1s ease;
+  transition: all .5s ease;
   transform: translateY(60px);
   font-weight: 600;
 }
@@ -98,10 +105,24 @@ body {
   border : none;
   box-shadow: 0 8px 10px rgba(0, 0, 0, 100);
   font-weight: 600;
-  transition: all 1s ease;
+  transition: all .5s ease;
 }
 
 .about-btn:hover, .projects-btn:hover, .contact-btn:hover {
+  background-color: #D9D9D9;
+  color: #000000;
+  cursor: pointer;
+  padding: 12px 28px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 100);
+  border: none;
+  font-weight: 600;
+  display: inline-block;
+  transform: translateY(8px);
+  transition: transform .5s ease;
+}
+
+.about-btn:active, .projects-btn:active, .contact-btn:active {
   background-color: #D9D9D9;
   color: #000000;
   cursor: pointer;
@@ -112,10 +133,9 @@ body {
   font-weight: 600;
   display: inline-block;
   transform: translateY(60px);
-  transition: transform 1s ease;
+  transition: transform .01s ease;
 }
-
-.nav-menu:hover .home-btn:not(:hover) {
+.nav-menu:active .home-btn:not(:active) {
   background-color: #D9D9D9;
   color: #000000;
   padding: 12px 28px ;
@@ -123,7 +143,7 @@ body {
   border : none;
   font-weight: 600;
   box-shadow: 0 8px 10px rgba(0, 0, 0, 100);
-  transition: transform 1s ease ;
+  transition: transform .01s ease ;
   transform: translateY(-1px);
 }
 
@@ -153,15 +173,15 @@ body {
   flex-shrink: 0;
   padding-left: 0px;
   padding-right: 20px;
-  bo
+  
 }
 
 .hero-image img {
   width: 27.5rem;
   height: 32.5rem;
-  border-radius: 8px;
-  border: 2px solid #000;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+ 
+  box-shadow: 10px 20px 30px rgba(0, 0, 0, 100);
 }
 
 .hero-content {
@@ -221,7 +241,7 @@ body {
   font-weight: 600;
   font-size: 14px;
   cursor: pointer;
-  transition: all 1s ease;
+  transition: all .5s ease;
   box-shadow: #000 0px 8px 10px;
   border-radius: 20px;
 }
@@ -238,6 +258,7 @@ body {
   color: #000000;
   box-shadow: #000 0px 4px 6px;
   transform: translateY(10px);
+  border-radius: 10px;
 }
 .btn-primary:active {
   background-color: #000;
@@ -254,6 +275,7 @@ body {
   color: #000000;
   box-shadow: #000 0px 4px 6px;
   transform: translateY(10px);
+  border-radius: 10px;
 }
 .btn-secondary:active {
   background-color: #000;
