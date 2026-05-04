@@ -135,13 +135,18 @@
     }
 
     function resetToRealSlide() {
-      const slides = getSlides();
       if (currentIndex === 0) {
         currentIndex = totalSlides;
-        updateCarousel(false);
+        requestAnimationFrame(() => {
+          carouselTrack.style.transition = 'none';
+          updateCarousel(false);
+        });
       } else if (currentIndex === totalSlides + 1) {
         currentIndex = 1;
-        updateCarousel(false);
+        requestAnimationFrame(() => {
+          carouselTrack.style.transition = 'none';
+          updateCarousel(false);
+        });
       }
     }
 
