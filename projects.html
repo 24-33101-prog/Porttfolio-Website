@@ -26,78 +26,167 @@
   <!-- Projects Section -->
   <main class="projects-section">
     <div class="projects-container">
-      <div class="carousel">
-        <div class="carousel-nav">
-          <button class="carousel-btn">&lt;</button>
-          <button class="carousel-btn">&gt;</button>
+      <div class="carousel-wrapper">
+        <button class="carousel-btn prev">&lt;</button>
+        <div class="carousel">
+          <div class="carousel-track">
+            <div class="carousel-slide">
+              <img src="OIP (1).jpeg" alt="Project 1" />
+            </div>
+            <div class="carousel-slide">
+              <img src="OIP (1).jpeg" alt="Project 2" />
+            </div>
+            <div class="carousel-slide">
+              <img src="OIP (1).jpeg" alt="Project 3" />
+            </div>
+            <div class="carousel-slide">
+              <img src="OIP (1).jpeg" alt="Project 4" />
+            </div>
+            <div class="carousel-slide">
+              <img src="OIP (1).jpeg" alt="Project 5" />
+            </div>
+            <div class="carousel-slide">
+              <img src="OIP (1).jpeg" alt="Project 6" />
+            </div>
+          </div>
         </div>
-        <div class="carousel-track">
-          <div class="carousel-slide">
-            <img src="OIP (1).jpeg" alt="Project 1" />
-          </div>
-          <div class="carousel-slide">
-            <img src="OIP (1).jpeg" alt="Project 2" />
-          </div>
-          <div class="carousel-slide">
-            <img src="OIP (1).jpeg" alt="Project 3" />
-          </div>
-          <div class="carousel-slide">
-            <img src="OIP (1).jpeg" alt="Project 4" />
-          </div>
-        </div>
+        <button class="carousel-btn next">&gt;</button>
       </div>
-      <div class="carousel-dots">
-        <div class="dot active"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-      </div>
+      <div class="carousel-dots"></div>
       <p class="projects-description">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
     </div>
   </main>
 
   <script>
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.carousel-slide');
-    const dots = document.querySelectorAll('.dot');
     const carouselTrack = document.querySelector('.carousel-track');
     const carousel = document.querySelector('.carousel');
-    const buttons = carousel.querySelectorAll('.carousel-btn');
+    const carouselDots = document.querySelector('.carousel-dots');
+    const prevBtn = document.querySelector('.carousel-btn.prev');
+    const nextBtn = document.querySelector('.carousel-btn.next');
+    const originalSlides = Array.from(document.querySelectorAll('.carousel-slide'));
+    const totalSlides = originalSlides.length;
+    const dots = [];
+    let currentIndex = 1;
+    let isTransitioning = false;
+    let autoSlideInterval;
 
-    function updateCarousel() {
-      const slideWidth = slides[0].offsetWidth;
-      const gap = 20;
-      const offset = currentSlide * (slideWidth + gap);
-      carouselTrack.style.transform = `translateX(-${offset}px)`;
+    function cloneSlides() {
+      const firstClone = originalSlides[0].cloneNode(true);
+      const lastClone = originalSlides[totalSlides - 1].cloneNode(true);
+      firstClone.classList.add('clone');
+      lastClone.classList.add('clone');
+      carouselTrack.appendChild(firstClone);
+      carouselTrack.insertBefore(lastClone, carouselTrack.firstChild);
+    }
 
-      dots.forEach((dot, index) => {
-        dot.classList.remove('active');
-        if (index === currentSlide) {
-          dot.classList.add('active');
-        }
+    function getSlides() {
+      return Array.from(carouselTrack.querySelectorAll('.carousel-slide'));
+    }
+
+    function buildDots() {
+      originalSlides.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => {
+          goToIndex(index + 1);
+          resetAutoPlay();
+        });
+        carouselDots.appendChild(dot);
+        dots.push(dot);
       });
     }
 
-    buttons[0].addEventListener('click', () => {
-      if (currentSlide > 0) {
-        currentSlide--;
-        updateCarousel();
-      }
-    });
+    function updateCarousel(animate = true) {
+      const slides = getSlides();
+      const slideWidth = slides[0].offsetWidth;
+      const gap = 15;
+      const offset = currentIndex * (slideWidth + gap);
 
-    buttons[1].addEventListener('click', () => {
-      if (currentSlide < slides.length - 1) {
-        currentSlide++;
-        updateCarousel();
-      }
-    });
+      carouselTrack.style.transition = animate ? 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)' : 'none';
+      carouselTrack.style.transform = `translateX(-${offset}px)`;
 
-    dots.forEach((dot, index) => {
-      dot.addEventListener('click', () => {
-        currentSlide = index;
-        updateCarousel();
+      slides.forEach((slide, index) => {
+        slide.classList.toggle('active', index === currentIndex);
       });
+
+      const activeDotIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === activeDotIndex);
+      });
+    }
+
+    function goToIndex(index) {
+      if (isTransitioning) return;
+      currentIndex = index;
+      updateCarousel(true);
+    }
+
+    function goToNext() {
+      if (isTransitioning) return;
+      currentIndex += 1;
+      updateCarousel(true);
+    }
+
+    function goToPrev() {
+      if (isTransitioning) return;
+      currentIndex -= 1;
+      updateCarousel(true);
+    }
+
+    function resetToRealSlide() {
+      const slides = getSlides();
+      if (currentIndex === 0) {
+        currentIndex = totalSlides;
+        updateCarousel(false);
+      } else if (currentIndex === totalSlides + 1) {
+        currentIndex = 1;
+        updateCarousel(false);
+      }
+    }
+
+    function startAutoPlay() {
+      stopAutoPlay();
+      autoSlideInterval = setInterval(goToNext, 4500);
+    }
+
+    function stopAutoPlay() {
+      clearInterval(autoSlideInterval);
+    }
+
+    function resetAutoPlay() {
+      stopAutoPlay();
+      startAutoPlay();
+    }
+
+    cloneSlides();
+    buildDots();
+    updateCarousel(false);
+
+    carouselTrack.addEventListener('transitionstart', () => {
+      isTransitioning = true;
     });
+
+    carouselTrack.addEventListener('transitionend', () => {
+      isTransitioning = false;
+      resetToRealSlide();
+    });
+
+    prevBtn.addEventListener('click', () => {
+      goToPrev();
+      resetAutoPlay();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      goToNext();
+      resetAutoPlay();
+    });
+
+    carousel.addEventListener('mouseenter', stopAutoPlay);
+    carousel.addEventListener('mouseleave', startAutoPlay);
+
+    window.addEventListener('resize', () => updateCarousel(false));
+    startAutoPlay();
   </script>
 </body>
 </html>
