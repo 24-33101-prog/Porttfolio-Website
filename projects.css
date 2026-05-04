@@ -26,7 +26,7 @@ nav.navbar {
 }
 
 .nav-container {
-  padding: 20px 40px;
+
   background-color: #D9D9D9;
   display: flex;
   justify-content: space-between;
@@ -39,13 +39,27 @@ nav.navbar {
   font-weight: 1000;
   display: flex;
   align-items: center;
-  gap: 8px;
+ 
 }
 
 .nav-logo img.nav-logo-image {
-  width: 40px;
-  height: auto;
+  padding: 0;
+  margin: 0;
+  width: 80px;
+  height: 80px;
   object-fit: contain;
+}
+
+.nav-logo .bat {
+  color: #000000;
+}
+
+.nav-logo .state {
+  color: #ffffff;
+}
+
+.nav-logo .u {
+  color:  #c41e3a;
 }
 
 .nav-logo .bat {
@@ -62,6 +76,7 @@ nav.navbar {
 
 .nav-menu {
   display: flex;
+  padding-right: 40px;
   align-items: center;
   list-style: none;
   gap: 30px;
