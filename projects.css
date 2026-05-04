@@ -167,9 +167,11 @@ nav.navbar {
   max-width: 1000px;
   width: 100%;
   text-align: center;
+  padding-top: 100px;
 }
 
 .carousel {
+  
   position: relative;
   margin-bottom: 40px;
 }
