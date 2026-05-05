@@ -52,8 +52,22 @@
         </div>
         <button class="carousel-btn next">&gt;</button>
       </div>
+      <div class="image-modal hidden" aria-hidden="true">
+        <div class="image-modal-backdrop"></div>
+        <div class="image-modal-content">
+          <button class="image-modal-close" aria-label="Close zoom view">&times;</button>
+          <img src="" alt="" />
+        </div>
+      </div>
       <div class="carousel-dots"></div>
-      <p class="projects-description">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+      <div class="project-descriptions">
+        <p class="projects-description active" data-index="0">This is the description for Project 1. It showcases the first project in the carousel with unique details and features.</p>
+        <p class="projects-description" data-index="1">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+        <p class="projects-description" data-index="2">The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
+        <p class="projects-description" data-index="3">Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
+        <p class="projects-description" data-index="4">Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like.</p>
+        <p class="projects-description" data-index="5">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.</p>
+      </div>
     </div>
   </main>
 
@@ -63,6 +77,7 @@
     const carouselDots = document.querySelector('.carousel-dots');
     const prevBtn = document.querySelector('.carousel-btn.prev');
     const nextBtn = document.querySelector('.carousel-btn.next');
+    const projectDescriptions = document.querySelectorAll('.projects-description');
     const originalSlides = Array.from(document.querySelectorAll('.carousel-slide'));
     const totalSlides = originalSlides.length;
     const dots = [];
@@ -114,6 +129,10 @@
       dots.forEach((dot, index) => {
         dot.classList.toggle('active', index === activeDotIndex);
       });
+
+      projectDescriptions.forEach((desc, index) => {
+        desc.classList.toggle('active', index === activeDotIndex);
+      });
     }
 
     function goToIndex(index) {
@@ -150,19 +169,39 @@
       }
     }
 
-    function startAutoPlay() {
-      stopAutoPlay();
-      autoSlideInterval = setInterval(goToNext, 4500);
+    const imageModal = document.querySelector('.image-modal');
+    const modalImage = imageModal.querySelector('img');
+    const modalClose = imageModal.querySelector('.image-modal-close');
+    const modalBackdrop = imageModal.querySelector('.image-modal-backdrop');
+
+    function openZoomModal(imageSrc, imageAlt) {
+      modalImage.src = imageSrc;
+      modalImage.alt = imageAlt || 'Full size project image';
+      imageModal.classList.remove('hidden');
+      imageModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
     }
 
-    function stopAutoPlay() {
-      clearInterval(autoSlideInterval);
+    function closeZoomModal() {
+      imageModal.classList.add('hidden');
+      imageModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
     }
 
-    function resetAutoPlay() {
-      stopAutoPlay();
-      startAutoPlay();
-    }
+    // Add click event to all carousel images
+    document.querySelectorAll('.carousel-slide img').forEach(img => {
+      img.addEventListener('click', () => {
+        openZoomModal(img.src, img.alt);
+      });
+    });
+
+    modalClose.addEventListener('click', closeZoomModal);
+    modalBackdrop.addEventListener('click', closeZoomModal);
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !imageModal.classList.contains('hidden')) {
+        closeZoomModal();
+      }
+    });
 
     cloneSlides();
     buildDots();
@@ -179,19 +218,13 @@
 
     prevBtn.addEventListener('click', () => {
       goToPrev();
-      resetAutoPlay();
     });
 
     nextBtn.addEventListener('click', () => {
       goToNext();
-      resetAutoPlay();
     });
 
-    carousel.addEventListener('mouseenter', stopAutoPlay);
-    carousel.addEventListener('mouseleave', startAutoPlay);
-
     window.addEventListener('resize', () => updateCarousel(false));
-    startAutoPlay();
   </script>
 </body>
 </html>

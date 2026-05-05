@@ -181,7 +181,7 @@ nav.navbar {
   gap: 60px;
   max-width: min(90%, 1600px);
   width: 100%;
-  margin: 0 auto;
+ 
 }
 
 .about-image {
@@ -242,11 +242,12 @@ nav.navbar {
 }
 
 .about-content p {
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 600;
   line-height: 1.8;
   color: #000000;
-  text-align: justify;
+  text-align: left;
+  margin-bottom: 20px;
 }
 .skills-section {
   display: flex;
@@ -263,7 +264,7 @@ nav.navbar {
   border : none;
   box-shadow: 0 8px 10px rgba(0, 0, 0, 100);
   font-weight: 600;
-  transform: translateY(89px);
+  transform: translateY(120px);
 }
 .skills-btn:hover {
   background-color: #D9D9D9;
@@ -276,7 +277,7 @@ nav.navbar {
   font-weight: 600;
   display: inline-block;
   transition: transform .5s ease;
-   transform: translateY(85px);
+   transform: translateY(116px);
  
 }
 
@@ -290,7 +291,7 @@ nav.navbar {
   border: none;
   font-weight: 600;
   display: inline-block;
-  transform: translateY(89px);
+  transform: translateY(120px);
   transition: transform .01s ease;
  
 }
