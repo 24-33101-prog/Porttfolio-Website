@@ -264,7 +264,7 @@ box-shadow: 0 8px 10px rgba(0, 0, 0, 100);
   border : none;
   box-shadow: 0 8px 10px rgba(0, 0, 0, 100);
   font-weight: 600;
-  transform: translateY(113px);
+  transform: translateY(156px);
 }
 .skills-btn:hover {
   background-color: #D9D9D9;
@@ -277,7 +277,7 @@ box-shadow: 0 8px 10px rgba(0, 0, 0, 100);
   font-weight: 600;
   display: inline-block;
   transition: transform .5s ease;
-   transform: translateY(109px);
+   transform: translateY(152px);
  
 }
 
@@ -291,7 +291,7 @@ box-shadow: 0 8px 10px rgba(0, 0, 0, 100);
   border: none;
   font-weight: 600;
   display: inline-block;
-  transform: translateY(113px);
+  transform: translateY(156px);
   transition: transform .01s ease;
  
 }
