@@ -192,6 +192,9 @@ nav.navbar {
   align-items: center;
   gap: 20px;
   margin-bottom: 25px;
+  background-color: #BEBEBE;
+  border-radius: 10px;
+  font-weight: 600;
 }
 
 .contact-icon {
